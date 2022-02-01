@@ -132,6 +132,7 @@ L = '(0.5*{}*v**2*{}*Aref)'.format(rho, Cl)
 r = '(re+h)'
 
 # Define equations of motion
+## These state estimates are the outputs of beluga
 ocp_2 \
     .state('h', 'v*sin(gam)', 'm') \
     .state('theta', 'v*cos(gam)*cos(psi)/({}*cos(phi))'.format(r), 'rad') \
@@ -212,12 +213,118 @@ cont_3dof = beluga.solve(
 
 final_continuation = cont_3dof[-1]
 
+## Trajectory values
+# trajectory.y[:, 0] holds h: altitude in m
+# trajectory.y[:, 1] holds theta: downrange in radians, pitch angle pertubation
+# trajectory.y[:, 2] holds phi: bank angle, roll angle?
+# trajectory.y[:, 3] holds v: velocity in m/s
+# trajectory.y[:, 4] holds gamma: flight path angle, inclination, climb angle?
+# trajectory.y[:, 5] holds psi: heading angle, turn rate?
+
+# Altitude vs velocity corridor
 plt.figure()
 for trajectory in final_continuation:
     # Plot altitude vs velocity for the swept crossrange cases
     plt.plot(trajectory.y[:, 3], trajectory.y[:, 0])
 
-plt.xlabel('Velocity [m/s]')
-plt.ylabel('Altitude [m]')
+plt.xlabel('v [m/s]')
+plt.ylabel('h [m]')
+plt.title('h-v Plot')
 plt.grid(True)
 plt.show()
+plt.savefig('plot1-altitude-vs-velocity-.png')
+
+plt.figure()
+for trajectory in final_continuation:
+    # Plot downrange
+    plt.plot( (trajectory.y[:, 1]), (trajectory.y[:, 0]))
+
+plt.xlabel(r"${\Theta}$  [deg]")
+plt.ylabel('h [m]')
+plt.title('Downrange')
+plt.grid(True)
+plt.show()
+plt.savefig('plot2-altitude-vs-downrange.png')
+
+import numpy as np
+
+## Emily plots
+# Altitude vs time
+plt.figure()
+for trajectory in final_continuation:
+    # Plot downrange
+    plt.plot( np.linspace(0, len(trajectory.y[:, 0]), len(trajectory.y[:, 0])), (trajectory.y[:, 0]))
+
+plt.xlabel("t [s]")
+plt.ylabel('h [m]')
+plt.title('Altitude vs Time')
+plt.grid(True)
+plt.show()
+plt.savefig('plot3-altitude-vs-time.png')
+
+# Downrange vs time
+plt.figure()
+for trajectory in final_continuation:
+    # Plot downrange
+    plt.plot( np.linspace(0, len(trajectory.y[:, 0]), len(trajectory.y[:, 0])), (trajectory.y[:, 1]))
+
+plt.xlabel("t [s]")
+plt.ylabel(r"${\Theta}$  [deg]")
+plt.title('Downrange vs Time')
+plt.grid(True)
+plt.show()
+plt.savefig('plot4-downrange-vs-time.png')
+
+# Bank angle vs time
+plt.figure()
+for trajectory in final_continuation:
+    # Plot downrange
+    plt.plot( np.linspace(0, len(trajectory.y[:, 0]), len(trajectory.y[:, 0])), (trajectory.y[:, 2]))
+
+plt.xlabel("t [s]")
+plt.ylabel(r"${\phi}$  [deg]")
+plt.title('Bank Angle vs Time')
+plt.grid(True)
+plt.show()
+plt.savefig('plot5-bank-angle-vs-time.png')
+
+# Velocity vs time
+plt.figure()
+for trajectory in final_continuation:
+    # Plot downrange
+    plt.plot( np.linspace(0, len(trajectory.y[:, 0]), len(trajectory.y[:, 0])), (trajectory.y[:, 3]))
+
+plt.xlabel("t [s]")
+plt.ylabel('v [m/s]')
+plt.title('Velocity vs Time')
+plt.grid(True)
+plt.show()
+plt.savefig('plot6-velocity-vs-time.png')
+
+# Flight Path Angle vs time
+plt.figure()
+for trajectory in final_continuation:
+    # Plot downrange
+    plt.plot( np.linspace(0, len(trajectory.y[:, 0]), len(trajectory.y[:, 0])), (trajectory.y[:, 4]))
+
+plt.xlabel("t [s]")
+plt.ylabel(r"${\gamma}$  [deg]")
+plt.title('Flight Path Angle vs Time')
+plt.grid(True)
+plt.show()
+plt.savefig('plot7-flight-path-angle-vs-time.png')
+
+# Heading angle vs time
+plt.figure()
+for trajectory in final_continuation:
+    # Plot downrange
+    plt.plot( np.linspace(0, len(trajectory.y[:, 0]), len(trajectory.y[:, 0])), (trajectory.y[:, 5]))
+
+plt.xlabel("t [s]")
+plt.ylabel(r"${\Psi}$  [deg]")
+plt.title('Heading Angle vs Time')
+plt.grid(True)
+plt.show()
+plt.savefig('plot8-heading-angle-vs-time.png')
+
+print("Done.")
