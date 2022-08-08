@@ -1,16 +1,32 @@
+####################################################################################################
+# Plot beluga dataset stored as beluga filetype
+####################################################################################################
+
 from beluga.utils import load
 import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-data = load('data.beluga')
+####################################################################################################
+# USER INPUTS
+####################################################################################################
+## Specify filepath to data file
+BELUGA_DATA_FILE = "/home/ebartusi/beluga/examples/our_code/generated_datasets/beluga_v1_planarHypersonicsSkip/data_beluga_format/data.beluga"
+
+## Specify directory to store plots
+# Note: make sure to include "/" at the end of the filepath
+PLOT_DIR = "/home/ebartusi/beluga/examples/our_code/generated_datasets/beluga_v1_planarHypersonicsSkip/plots/"
+####################################################################################################
+
+## Load the dataset formatted as beluga type
+data = load(BELUGA_DATA_FILE)
 sol_set = data['solutions']
 final_continuation = sol_set[-1]
 
-## Make the results directory to store csv files, if it does not already exist
-if not(os.path.isdir('./plots/')):
-    os.makedirs('./plots/')
-    print("Made directory: './plots/' ")
+## Make the plots directory to store plots, if it does not already exist
+if not(os.path.isdir(PLOT_DIR)):
+    os.makedirs(PLOT_DIR)
+    print(f"Created directory to store plots of dataset: '{PLOT_DIR}' ")
 
 plt.figure()
 for trajectory in final_continuation:
@@ -19,10 +35,13 @@ for trajectory in final_continuation:
 
 plt.xlabel('Time [s]')
 plt.ylabel('Altitude [m]')
+plt.title("Altitude vs. Time")
 plt.grid(True)
 plt.show()
-plt.savefig('./plots/altitude-vs-time.png')
+plot_name = f'{PLOT_DIR}altitude-vs-time.png'
+plt.savefig(plot_name)
 plt.close()
+print(f"Saved plot '{plot_name}'")
 
 plt.figure()
 for trajectory in final_continuation:
@@ -31,10 +50,13 @@ for trajectory in final_continuation:
 
 plt.xlabel('Time [s]')
 plt.ylabel('Velocity [m/s]')
+plt.title("Velocity vs. Time")
 plt.grid(True)
 plt.show()
-plt.savefig('./plots/velocity-vs-time.png')
+plot_name = f'{PLOT_DIR}velocity-vs-time.png'
+plt.savefig(plot_name)
 plt.close()
+print(f"Saved plot '{plot_name}'")
 
 plt.figure()
 for trajectory in final_continuation:
@@ -43,10 +65,13 @@ for trajectory in final_continuation:
 
 plt.xlabel('Velocity [m/s]')
 plt.ylabel('Altitude [m]')
+plt.title("Altitude vs. Velocity")
 plt.grid(True)
 plt.show()
-plt.savefig('./plots/velocity-vs-altitude.png')
+plot_name = f'{PLOT_DIR}velocity-vs-altitude.png'
+plt.savefig(plot_name)
 plt.close()
+print(f"Saved plot '{plot_name}'")
 
 plt.figure()
 for trajectory in final_continuation:
@@ -55,10 +80,13 @@ for trajectory in final_continuation:
 
 plt.xlabel('Time [s]')
 plt.ylabel('Longitude [deg]')
+plt.title("Longitude vs. Time")
 plt.grid(True)
 plt.show()
-plt.savefig('./plots/longitude-vs-time.png')
+plot_name = f'{PLOT_DIR}longitude-vs-time.png'
+plt.savefig(plot_name)
 plt.close()
+print(f"Saved plot '{plot_name}'")
 
 plt.figure()
 for trajectory in final_continuation:
@@ -67,10 +95,13 @@ for trajectory in final_continuation:
 
 plt.xlabel('Time [s]')
 plt.ylabel('Flight Path Angle [deg]')
+plt.title("Flight Path Angle vs. Time")
 plt.grid(True)
 plt.show()
-plt.savefig('./plots/flight-path-angle.png')
+plot_name = f'{PLOT_DIR}flight-path-angle.png'
+plt.savefig(plot_name)
 plt.close()
+print(f"Saved plot '{plot_name}'")
 
 plt.figure()
 for trajectory in final_continuation:
@@ -79,7 +110,12 @@ for trajectory in final_continuation:
 
 plt.xlabel('Time [s]')
 plt.ylabel('Angle of Attack [deg]')
+plt.title("Angle of Attack vs. Time")
 plt.grid(True)
 plt.show()
-plt.savefig('./plots/angle-of-attack.png')
+plot_name = f'{PLOT_DIR}angle-of-attack.png'
+plt.savefig(plot_name)
 plt.close()
+print(f"Saved plot '{plot_name}'")
+
+print("\nDone.\n")
