@@ -1,9 +1,25 @@
+####################################################################################################
+# Convert beluga dataset stored as beluga filetype to csv files 
+####################################################################################################
+
 from beluga.utils import load
 import numpy as np
 import os
 import math
 
-data = load('data.beluga')
+####################################################################################################
+# USER INPUTS
+####################################################################################################
+## Specify filepath to data file
+BELUGA_DATA_FILE = "/home/ebartusi/beluga/examples/our_code/generated_datasets/beluga_v1_planarHypersonicsSkip/data_beluga_format/data.beluga"
+
+## Specify directory to store csv files
+# Note: make sure to include "/" at the end of the filepath
+CSV_DIR = "/home/ebartusi/beluga/examples/our_code/generated_datasets/beluga_v1_planarHypersonicsSkip/data_csv_format/beluga_v1-3_debugging/"
+####################################################################################################
+
+## Load the dataset formatted as beluga type
+data = load(BELUGA_DATA_FILE)
 sol_set = data['solutions']
 final_continuation = sol_set[-1]
 
@@ -12,9 +28,9 @@ fields = ['time(s)', 'altitude(m)', 'longitude(deg)', 'speed(m/s)', 'flight_path
 header = ' '.join(fields)
 
 ## Make the results directory to store csv files, if it does not already exist
-if not(os.path.isdir('./csvresults/')):
-    os.makedirs('./csvresults/')
-    print("Made directory: './csvresults/' ")
+if not(os.path.isdir(CSV_DIR)):
+    os.makedirs(CSV_DIR)
+    print(f"Created directory to store data formatted as .csv files: '{CSV_DIR}' ")
 
 index=0
 for trajectory in final_continuation:
@@ -39,13 +55,18 @@ for trajectory in final_continuation:
     time = time[..., np.newaxis]
     angle_of_attack = angle_of_attack[..., np.newaxis]
 
-    fname = "csvresults/" + "{:06d}".format(index) + ".csv"
+    ## Create filename for this trajectory (include full filepath)
+    fname = f"{CSV_DIR}{index:06d}.csv"
+    ## Concatenate all rows to be saved to csv file
     rows = np.concatenate((time, altitude, longitude, speed, flight_path_angle, angle_of_attack), axis=1)
+    ## Save this trajectory to a csv file
     np.savetxt(fname, rows, fmt='%f', delimiter=" ")
-
+    ## Add header information to csv file
     with open(fname, 'r+') as f:
         contents = f.read()
         f.seek(0,0)
         f.write(header + '\n' + contents)
-
+    ## Print status
     print(f"Trajectory {index} saved.")
+
+print("\nDone.\n")
