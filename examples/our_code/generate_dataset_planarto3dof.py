@@ -25,7 +25,7 @@ import beluga
 # Note: a subdirectory will be created in OUTPUT_DIR that has the name "data_beluga_format". The data
 # file and log file will be stored in this subdirectory within OUTPUT_DIR.
 # Example: OUTPUT_DIR = "./generated_datasets/beluga_v2_planarto3dof/"
-OUTPUT_DIR = "./generated_datasets/beluga_v3_planarto3dof/"
+OUTPUT_DIR = "./generated_datasets/beluga_v2_planarto3dof/"
 
 ## Specify a suffix for the dataset name, if one is desired
 # The suffix will be appended to the name of dataset, which will be used in the filenames of the log file and the dataset file
