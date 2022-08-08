@@ -160,3 +160,5 @@ sol_set = beluga.solve(
     initial_helper=True,
     autoscale=False
 )
+
+print("\nDone.\n")
