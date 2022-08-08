@@ -1,3 +1,7 @@
+####################################################################################################
+# Create a beluga dataset that exhibits vertical maneuvers
+####################################################################################################
+
 """
 References
 ----------
@@ -5,11 +9,56 @@ References
     NASA STI/Recon Technical Report A 81 (1980).
 """
 
+####################################################################################################
+
+import os
 from math import *
+import numpy as np
+import logging
 
 import beluga
-import logging
-import numpy as np
+
+####################################################################################################
+# USER INPUTS
+####################################################################################################
+## Specify output directory
+# Note: make sure to include "/" at the end of the filepath
+# Note: a subdirectory will be created in OUTPUT_DIR that has the name "data_beluga_format". The data
+# file and log file will be stored in this subdirectory within OUTPUT_DIR.
+# Example: OUTPUT_DIR = "/home/ebartusi/beluga/examples/our_code/generated_datasets/beluga_v1_planarHypersonicsSkip/"
+OUTPUT_DIR = "/home/ebartusi/beluga/examples/our_code/generated_datasets/beluga_v1_planarHypersonicsSkip/"
+
+## Specify a suffix for the dataset name, if one is desired
+# The suffix will be appended to the name of dataset, which will be used in the filenames of the log file and the dataset file
+# Note: the name of the log file will be "log_<suffix>.log"
+# Note: the name of the data file will be "data_<suffix>.log"
+# Note: if no suffix is desired, specify DATA_NAME_SUFFIX = ""
+DATA_NAME_SUFFIX = ""
+####################################################################################################
+
+## Create the full filepath to the output directory
+output_dir = f'{OUTPUT_DIR}data_beluga_format/'
+
+## Verify that the output directory does not already exist
+# Data will not be overwritten
+assert not(os.path.isdir(output_dir)), f"\nThe data directory '{output_dir}' already exists. Will not overwrite. Terminating.\n"
+
+## Make the directory to store the data and log files
+os.makedirs(output_dir)
+print(f"Created directory to store dataset: '{output_dir}' ")
+
+## Create filenames of dataset file and log file
+log_filename = f"{output_dir}log"
+dataset_filename = f"{output_dir}data"
+
+## Append the suffix, if it was provided
+if not(DATA_NAME_SUFFIX == ""):
+    log_filename += f"_{DATA_NAME_SUFFIX}"
+    dataset_filename += f"_{DATA_NAME_SUFFIX}"
+
+## Append the file extensions
+log_filename += ".log"
+dataset_filename += ".beluga"
 
 ocp = beluga.Problem()
 
@@ -79,11 +128,6 @@ continuation_steps.add_step('bisection') \
                 .num_cases(11) \
                 .const('h_f', 0)
 
-# # Slowly turn up the density
-# continuation_steps.add_step('bisection') \
-#                 .num_cases(11) \
-#                 .const('rho0', 1.2)
-
 # Move downrange out a tad
 continuation_steps.add_step('bisection') \
                 .num_cases(11) \
@@ -143,12 +187,8 @@ continuation_steps.add_step('bisection') \
                 .const('gam_0', 0*np.pi/180) \
                 .const('theta_f', 22.0*np.pi/180)
 
-## Move downrange down a bit
-#continuation_steps.add_step('bisection') \
-#                .num_cases(21) \
-#                .const('theta_f', 1*pi/180)
-
-beluga.add_logger(file_level=logging.DEBUG, display_level=logging.INFO)
+## Save log output
+beluga.add_logger(file_level=logging.DEBUG, display_level=logging.INFO, filename=log_filename)
 
 sol_set = beluga.solve(
     ocp=ocp,
@@ -158,7 +198,10 @@ sol_set = beluga.solve(
     steps=continuation_steps,
     guess_generator=guess_maker,
     initial_helper=True,
-    autoscale=False
+    autoscale=False,
+    save_sols=dataset_filename
 )
 
+print(f"\nLog file saved to: '{log_filename}'")
+print(f"Data file saved to: '{dataset_filename}'")
 print("\nDone.\n")

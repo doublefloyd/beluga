@@ -11,11 +11,14 @@ import math
 # USER INPUTS
 ####################################################################################################
 ## Specify filepath to data file
+# Note: expected filetype is .beluga file
+# Example: BELUGA_DATA_FILE = "/home/ebartusi/beluga/examples/our_code/generated_datasets/beluga_v1_planarHypersonicsSkip/data_beluga_format/data.beluga"
 BELUGA_DATA_FILE = "/home/ebartusi/beluga/examples/our_code/generated_datasets/beluga_v1_planarHypersonicsSkip/data_beluga_format/data.beluga"
 
 ## Specify directory to store csv files
 # Note: make sure to include "/" at the end of the filepath
-CSV_DIR = "/home/ebartusi/beluga/examples/our_code/generated_datasets/beluga_v1_planarHypersonicsSkip/data_csv_format/beluga_v1-3_debugging/"
+# Example: CSV_DIR = "/home/ebartusi/beluga/examples/our_code/generated_datasets/beluga_v1_planarHypersonicsSkip/data_csv_format/beluga_v1-2_planarHypersoncsSkip_uniformDataRecordingStepSize/"
+CSV_DIR = "/home/ebartusi/beluga/examples/our_code/generated_datasets/beluga_v1_planarHypersonicsSkip/data_csv_format/beluga_v1-2_planarHypersoncsSkip_uniformDataRecordingStepSize/"
 ####################################################################################################
 
 ## Load the dataset formatted as beluga type
@@ -67,6 +70,6 @@ for trajectory in final_continuation:
         f.seek(0,0)
         f.write(header + '\n' + contents)
     ## Print status
-    print(f"Trajectory {index} saved.")
+    print(f"Trajectory {index} saved to {fname}.")
 
 print("\nDone.\n")
