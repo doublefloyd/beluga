@@ -6,6 +6,17 @@ The first type of dataset generates 250 hypersonic trajectories that exibit vert
 
 The second type of datasets generates 1,681 hypersonic trajectories that exhibit vertical and horizontal maneuvers. This type of dataset is called a "Planar to 3 DOF" dataset.
 
+## Installing Necessary Packages
+
+Create an anaconda environment from the provided `environment.yml` file to install all necessary packages.
+
+### Key Steps:
+
+```
+$ conda env create -f environment.yml
+$ conda activate beluga
+```
+
 ## Generating a Planar Hypersonics Skip Dataset
 
 ### Key Steps:
