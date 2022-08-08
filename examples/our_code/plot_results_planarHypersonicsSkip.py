@@ -2,27 +2,28 @@
 # Plot beluga dataset stored as beluga filetype
 ####################################################################################################
 
-from beluga.utils import load
-import matplotlib.pyplot as plt
-import numpy as np
 import os
+import numpy as np
+import matplotlib.pyplot as plt
+
+import beluga
 
 ####################################################################################################
 # USER INPUTS
 ####################################################################################################
 ## Specify filepath to data file that will be used for plotting
 # Note: expected filetype is .beluga file
-# Example: BELUGA_DATA_FILE = "/home/ebartusi/beluga/examples/our_code/generated_datasets/beluga_v1_planarHypersonicsSkip/data_beluga_format/data.beluga"
-BELUGA_DATA_FILE = "/home/ebartusi/beluga/examples/our_code/generated_datasets/beluga_v1_planarHypersonicsSkip/data_beluga_format/data.beluga"
+# Example: BELUGA_DATA_FILE = "./generated_datasets/beluga_v1_planarHypersonicsSkip/data_beluga_format/data.beluga"
+BELUGA_DATA_FILE = "./generated_datasets/beluga_v1_planarHypersonicsSkip/data_beluga_format/data.beluga"
 
 ## Specify directory to store plots
 # Note: make sure to include "/" at the end of the filepath
-# Example: PLOT_DIR = "/home/ebartusi/beluga/examples/our_code/generated_datasets/beluga_v1_planarHypersonicsSkip/plots/"
-PLOT_DIR = "/home/ebartusi/beluga/examples/our_code/generated_datasets/beluga_v1_planarHypersonicsSkip/plots/"
+# Example: PLOT_DIR = "./generated_datasets/beluga_v1_planarHypersonicsSkip/plots/"
+PLOT_DIR = "./generated_datasets/beluga_v1_planarHypersonicsSkip/plots/"
 ####################################################################################################
 
 ## Load the dataset formatted as beluga type
-data = load(BELUGA_DATA_FILE)
+data = beluga.utils.load(BELUGA_DATA_FILE)
 sol_set = data['solutions']
 final_continuation = sol_set[-1]
 

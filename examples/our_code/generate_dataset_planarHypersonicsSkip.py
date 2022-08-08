@@ -25,8 +25,8 @@ import beluga
 # Note: make sure to include "/" at the end of the filepath
 # Note: a subdirectory will be created in OUTPUT_DIR that has the name "data_beluga_format". The data
 # file and log file will be stored in this subdirectory within OUTPUT_DIR.
-# Example: OUTPUT_DIR = "/home/ebartusi/beluga/examples/our_code/generated_datasets/beluga_v1_planarHypersonicsSkip/"
-OUTPUT_DIR = "/home/ebartusi/beluga/examples/our_code/generated_datasets/beluga_v1_planarHypersonicsSkip/"
+# Example: OUTPUT_DIR = "./generated_datasets/beluga_v1_planarHypersonicsSkip/"
+OUTPUT_DIR = "./generated_datasets/beluga_v1_planarHypersonicsSkip/"
 
 ## Specify a suffix for the dataset name, if one is desired
 # The suffix will be appended to the name of dataset, which will be used in the filenames of the log file and the dataset file
