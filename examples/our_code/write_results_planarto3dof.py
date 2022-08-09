@@ -69,7 +69,7 @@ for trajectory in final_continuation:
     ## Concatenate all rows to be saved to csv file
     rows = np.concatenate((time, altitude, longitude, latitude, speed, flight_path_angle, velocity_azimuth_angle, angle_of_attack, bank_angle), axis=1)
     ## Save this trajectory to a csv file
-    np.savetxt(fname, rows, fmt='%f', delimiter=" ", header=header)
+    np.savetxt(fname, rows, fmt='%f', delimiter=" ", header=header, comments='')
     ## Print status
     print(f"Trajectory {index} saved to {fname}")
 
