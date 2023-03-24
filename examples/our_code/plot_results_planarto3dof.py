@@ -69,7 +69,7 @@ plt.grid(True)
 for trajectory in final_continuation:
     plt.plot(trajectory.y[:, 3], trajectory.y[:, 0])
 plt.show()
-plot_name = f'{PLOT_DIR}velocity-vs-altitude.png'
+plot_name = f'{PLOT_DIR}altitude-vs-velocity.png'
 plt.savefig(plot_name)
 plt.close()
 print(f"Saved plot '{plot_name}'")
